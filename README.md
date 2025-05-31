@@ -49,7 +49,7 @@ This configuration enables external RPC access and Prometheus metrics.
 To download and run LiveView.sh, follow these steps:
 
 ```bash
-wget https://github.com/Midnight-Scripts/Midnight_Live_View/edit/main/README.md
+wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/main/LiveView.sh
 sudo chmod +x LiveView.sh
 ./LiveView.sh
 ```
