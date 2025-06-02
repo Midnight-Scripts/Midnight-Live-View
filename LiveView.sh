@@ -19,6 +19,21 @@ declare -A KEY_ITEMS=( ["grandpa_pub_key"]="gran" ["aura_pub_key"]="aura" ["side
 declare -A KEY_RESULTS
 declare -A PUBLIC_KEYS
 
+# Check for required dependencies
+check_dependencies(){
+  if [[ "$USE_DOCKER" == true ]]; then
+    required_deps=(jq curl top free df awk date uptime grep cut tr docker)
+  else
+    required_deps=(jq curl top free df awk date uptime grep cut tr)
+  fi
+  for cmd in "${required_deps[@]}"; do
+    if ! command -v "$cmd" &> /dev/null; then
+      echo "Required dependency not found: $cmd"
+      exit 1
+    fi
+  done
+}
+
 execute_command(){
   if [[ "$USE_DOCKER" == true ]]; then
     docker exec "$CONTAINER_NAME" "$@"
@@ -262,6 +277,7 @@ show_peers(){
 tput civis  # Hide cursor
 trap "tput cnorm; clear; exit" SIGINT SIGTERM
 
+check_dependencies
 fetch_static_data
 check_keys
 
