@@ -37,7 +37,7 @@ export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --pro
 ```
 **To:**
 ```bash
-export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --rpc-external --rpc-methods=Unsafe"
+export APPEND_ARGS="--validator --allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --unsafe-rpc-external --rpc-methods=Unsafe --rpc-cors all"
 ```
 
 This configuration enables external RPC access and Prometheus metrics.
