@@ -205,7 +205,7 @@ display_dashboard(){
   tput reset
   tput cup 0 0
   echo -e "\n  |     ${CYAN}🔵 Midnight Node Monitor - Version: ${WHITE}$NODE_VERSION${RESET}"
-  echo -e "  |  LiveView version 0.2.0"
+  echo -e "  |  LiveView version 0.2.1"
   echo "  |================================================================"
   echo -e "  | ⏳ Uptime:           ${YELLOW}$UPTIME${RESET}"
   echo -e "  | 🚀 Start Time:       ${GREEN}$START_FMT${RESET}"
@@ -235,6 +235,7 @@ display_dashboard(){
       fi
   done
   echo "  |----------------------------------------------------------------"
+  echo -e "  | 📚 Historic Blocks:  ${WHITE}$HISTORIC_BLOCKS${RESET} Since monitoring started"
   echo -e "  | 📦 Blocks Produced:  ${WHITE}$BLOCKS_PRODUCED${RESET} Since Docker restart"
   echo -e "  | 🧭 Epoch:            ${WHITE}$MAINCHAIN_EPOCH${RESET}"
   echo "  |----------------------------------------------------------------"
@@ -281,8 +282,20 @@ check_dependencies
 fetch_static_data
 check_keys
 
+
+# Count historic blocks from all_blocks.json
+get_historic_blocks_count() {
+  ALL_BLOCKS_FILE="$SCRIPT_DIR/all_blocks.json"
+  if [[ -f "$ALL_BLOCKS_FILE" ]]; then
+    HISTORIC_BLOCKS=$(wc -l < "$ALL_BLOCKS_FILE" 2>/dev/null || echo "0")
+  else
+    HISTORIC_BLOCKS="0"
+  fi
+}
+
 while true; do
   fetch_dynamic_data
+  get_historic_blocks_count
   display_dashboard
   read -rsn1 -t 1 key
   case "$key" in
