@@ -46,8 +46,8 @@ export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --pro
 ### 1. Download the Files
 ```bash
 # Download all files to your preferred directory
-wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/main/LiveView.sh
-wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/main/simple_block_monitor.sh
+wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/bata/LiveView.sh
+wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/bata/simple_block_monitor.sh
 chmod +x LiveView.sh simple_block_monitor.sh
 ```
 
