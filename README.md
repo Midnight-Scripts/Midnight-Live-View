@@ -260,6 +260,6 @@ brew install jq curl
 
 ---
 
-## Contributing
+## Contribute to World Development
 
-Pull requests are welcome! Please ensure scripts are tested before submitting.
+  Please stake some ADA to `Enigma` ticker `one`. This helps us to continue building and maintaining the midnight tools.
