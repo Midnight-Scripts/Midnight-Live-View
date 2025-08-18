@@ -103,7 +103,7 @@ USE_DOCKER=true           # Set to false for non-Docker setup
 ## Simple Block Monitor - Persistent Tracking
 
 ### Overview
-Monitors Docker logs for new blocks and maintains a persistent `all_blocks.json` file. This data survives Docker restarts and provides long-term block tracking.
+Monitors Docker logs for new blocks and maintains a persistent `all_blocks.json` file. This data survives Docker restarts and provides long term block tracking.
 
 ### Commands
 
@@ -253,7 +253,7 @@ brew install jq curl
 
 ## Notes
 
-- Docker logs are not persistent by default - use Simple Block Monitor for long-term tracking
+- Docker logs are not persistent by default use Simple Block Monitor for long term tracking
 - The dashboard refreshes every second
 - Block monitor prevents duplicate entries automatically
 - Both tools can run independently or together
