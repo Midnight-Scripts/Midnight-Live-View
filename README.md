@@ -1,5 +1,10 @@
-# Midnight Node Monitoring Suite
+# Midnight Node Monitoring
+## Inspired by CNTool's gLiveView
+
 LiveView version 0.2.1
+Tested on Midnight Validator Node - Testnet - Version: 0.12.0-cab67f3b
+
+
 
 A comprehensive monitoring solution for Midnight blockchain nodes, featuring real-time dashboard monitoring and persistent block tracking.
 
@@ -36,7 +41,7 @@ To enable full monitoring features, update your `.envrc` file:
 export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --rpc-external"
 
 # To:
-export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --rpc-external --rpc-methods=Unsafe"
+export APPEND_ARGS="--validator --allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --unsafe-rpc-external --rpc-methods=Unsafe --rpc-cors all"
 ```
 
 ---
@@ -73,7 +78,7 @@ chmod +x LiveView.sh simple_block_monitor.sh
 ### Features
 - **Node Information**: Version, uptime, container start time
 - **Security**: Node key (masked), port, key status
-- **Registration**: Sidechain registration status
+- **Registration**: Registration status
 - **Block Data**: 
   - Historic blocks (total since monitoring started)
   - Blocks produced (since Docker restart)
