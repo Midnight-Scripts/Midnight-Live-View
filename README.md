@@ -97,10 +97,15 @@ chmod +x LiveView.sh simple_block_monitor.sh
 
 ### Configuration
 Update these variables if needed:
+
+#### Environment (USER VARIABLES)
+Make sure to check and update the user variables below according to your setup:
+
 ```bash
-CONTAINER_NAME="midnight"  # Docker container name
-PORT=9944                  # RPC port
-USE_DOCKER=true           # Set to false for non-Docker setup
+# ─── USER VARIABLES ────────────────────────────────
+CONTAINER_NAME="${CONTAINER_NAME:-midnight}"
+PORT="${PORT:-9944}"
+USE_DOCKER="${USE_DOCKER:-true}"
 ```
 
 ---
