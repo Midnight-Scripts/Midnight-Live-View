@@ -52,7 +52,7 @@ export APPEND_ARGS="--validator --allow-private-ip --pool-limit 10 --trie-cache-
 ```bash
 # Download all files to your preferred directory
 wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/bata/LiveView.sh
-wget -O ./LiveView.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/bata/simple_block_monitor.sh
+wget -O ./simple_block_monitor.sh  https://raw.githubusercontent.com/Midnight-Scripts/Midnight-Live-View/refs/heads/bata/simple_block_monitor.sh
 chmod +x LiveView.sh simple_block_monitor.sh
 ```
 
@@ -98,7 +98,7 @@ chmod +x LiveView.sh simple_block_monitor.sh
 ### Configuration
 Update these variables if needed:
 
-### Environment (USER VARIABLES)
+#### Environment (USER VARIABLES)
 Make sure to check and update the user variables below according to your setup:
 
 ```bash
