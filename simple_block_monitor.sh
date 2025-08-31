@@ -83,11 +83,6 @@ run_monitor() {
     echo -e "${YELLOW}💡 Press Ctrl+C to stop${RESET}"
     echo ""
 
-    # Check if blocks file exists
-    if [[ ! -f "$BLOCKS_FILE" ]]; then
-        echo -e "${RED}❌ $BLOCKS_FILE not found. Run ./full_block_scan.sh first${RESET}"
-        exit 1
-    fi
 
     # Get current count and load existing hashes
     current_count=$(wc -l < "$BLOCKS_FILE")
