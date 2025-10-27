@@ -36,6 +36,8 @@ Midnight Node Monitor - Version: 0.12.0-29935d2f
 To enable full monitoring features, update your `.envrc` file:
 
 **Modify the `APPEND_ARGS` line:**
+
+If you have 2 server setup ( Side chain on one and Midnight node on one )
 ```bash
 # From:
 export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --rpc-external"
@@ -43,6 +45,15 @@ export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --pro
 # To:
 export APPEND_ARGS="--validator --allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --unsafe-rpc-external --rpc-methods=Unsafe --rpc-cors all"
 ```
+If you have 1 server setup ( Side chain and Midnight node on same server )
+```bash
+# From:
+export APPEND_ARGS="--allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --rpc-external"
+
+# To:
+export APPEND_ARGS="--validator --allow-private-ip --pool-limit 10 --trie-cache-size 0 --prometheus-external --unsafe-rpc-external --rpc-methods=Unsafe --rpc-cors all --rpc-port 9944 --keystore-path=/data/chains/partner_chains_template/keystore/"
+```
+NOTE = Change the key store path if necessary
 
 ---
 
