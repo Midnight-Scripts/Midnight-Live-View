@@ -3,6 +3,7 @@
 # All-in-one block monitor with start/stop/status controls
 CONTAINER_NAME="${CONTAINER_NAME:-midnight}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+USE_DOCKER="${USE_DOCKER:-false}"
 BLOCKS_FILE="$SCRIPT_DIR/all_blocks.json"
 PID_FILE="$SCRIPT_DIR/.block_monitor.pid"
 LOG_FILE="$SCRIPT_DIR/block_monitor.log"
@@ -30,11 +31,13 @@ start_background() {
             return 1
         fi
     fi
-    
+
     echo -e "${GREEN}Starting block monitor in background...${RESET}"
-    nohup "$0" run > "$LOG_FILE" 2>&1 &
-    echo $! > "$PID_FILE"
-    echo -e "${GREEN}Monitor started. Use './simple_block_monitor.sh status' to check${RESET}"
+    nohup setsid "$0" run > "$LOG_FILE" 2>&1 &
+    pid=$!
+    echo "$pid" > "$PID_FILE"
+
+    echo -e "${GREEN}Monitor started (PID: $pid) Use './simple_block_monitor.sh status' to check${RESET}"
     echo -e "${GREEN}View logs: tail -f $LOG_FILE${RESET}"
 }
 
@@ -83,17 +86,21 @@ run_monitor() {
     echo -e "${YELLOW}💡 Press Ctrl+C to stop${RESET}"
     echo ""
 
+    if [[ ! -f "$BLOCKS_FILE" ]]; then
+        echo -e "${YELLOW}⚠️  $BLOCKS_FILE not found. Creating empty file.${RESET}"
+        touch "$BLOCKS_FILE"
+    fi
 
     # Get current count and load existing hashes
     current_count=$(wc -l < "$BLOCKS_FILE")
     echo -e "${GREEN}📊 Current blocks in file: $current_count${RESET}"
-    
+
     echo -e "${YELLOW}🔍 Loading existing block hashes...${RESET}"
-    existing_hashes=$(grep -oP '"hash": "\K0x[0-9a-fA-F]+' "$BLOCKS_FILE" | sort | uniq)
-    hash_count=$(echo "$existing_hashes" | wc -l)
+     existing_hashes=$(grep -oP '"hash": "\K0x[0-9a-fA-F]+' "$BLOCKS_FILE" | sort | uniq)
+        hash_count=$(echo "$existing_hashes" | wc -l)
     echo -e "${GREEN}📋 Loaded $hash_count unique hashes${RESET}"
     echo ""
-
+    
     # Simple append function
     append_new_block() {
         local datetime="$1"
@@ -119,14 +126,33 @@ run_monitor() {
     trap cleanup SIGINT SIGTERM
 
     echo -e "${CYAN}👀 Watching for NEW blocks only...${RESET}"
-
+    
     # Monitor with timestamp to only get new logs
-    docker logs --follow --since "$(date -u +"%Y-%m-%dT%H:%M:%S")" "$CONTAINER_NAME" 2>&1 | grep --line-buffered "Pre-sealed block" | while IFS= read -r line; do
-        # Parse the line
+
+    if [[ "$USE_DOCKER" == "true" ]]; then
+    LOG_CMD=(
+        docker logs
+        --follow
+        --since "$(date -u +"%Y-%m-%dT%H:%M:%S")"
+        "$CONTAINER_NAME"
+    )
+    else
+        LOG_CMD=(
+            journalctl
+            -u "$CONTAINER_NAME"
+            -f
+            --output=cat
+            --since "now"
+        )
+    fi
+
+    "${LOG_CMD[@]}" 2>&1 \
+    | grep --line-buffered "Pre-sealed block" \
+    | while IFS= read -r line; do
         datetime=$(echo "$line" | awk '{print $1, $2}')
         block_num=$(echo "$line" | grep -oP 'proposal at \K[0-9]+')
         hash=$(echo "$line" | grep -oP 'Hash now \K0x[0-9a-fA-F]+')
-        
+
         if [[ -n "$hash" && -n "$block_num" ]]; then
             # Check if this hash already exists in our file
             if ! echo "$existing_hashes" | grep -q "^$hash$"; then
