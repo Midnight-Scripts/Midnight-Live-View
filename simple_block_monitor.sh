@@ -142,7 +142,7 @@ run_monitor() {
             -u "$CONTAINER_NAME"
             -f
             --output=cat
-            --since "now"
+            --since "$(date -u '+%Y-%m-%d %H:%M:%S')"
         )
     fi
 
