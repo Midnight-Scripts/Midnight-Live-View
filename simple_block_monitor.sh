@@ -2,6 +2,7 @@
 
 # All-in-one block monitor with start/stop/status controls
 CONTAINER_NAME="${CONTAINER_NAME:-midnight}"
+SYSTEMD_NAME="${SYSTEMD_NAME:-midnight-node}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 USE_DOCKER="${USE_DOCKER:-false}"
 BLOCKS_FILE="$SCRIPT_DIR/all_blocks.json"
@@ -81,6 +82,7 @@ check_status() {
 
 # Function to run the actual monitoring
 run_monitor() {
+    clear
     echo -e "${CYAN}🔍 Block Monitor Starting...${RESET}"
     echo -e "${CYAN}📁 Blocks file: $BLOCKS_FILE${RESET}"
     echo -e "${YELLOW}💡 Press Ctrl+C to stop${RESET}"
@@ -96,8 +98,10 @@ run_monitor() {
     echo -e "${GREEN}📊 Current blocks in file: $current_count${RESET}"
 
     echo -e "${YELLOW}🔍 Loading existing block hashes...${RESET}"
-     existing_hashes=$(grep -oP '"hash": "\K0x[0-9a-fA-F]+' "$BLOCKS_FILE" | sort | uniq)
-        hash_count=$(echo "$existing_hashes" | wc -l)
+    existing_hashes=$(grep -oP '"hash": "\K0x[0-9a-fA-F]+' "$BLOCKS_FILE" | sort | uniq)
+    hash_count=$(grep -oP '"hash": "\K0x[0-9a-fA-F]+' "$BLOCKS_FILE" \
+        | sort -u \
+        | wc -l)
     echo -e "${GREEN}📋 Loaded $hash_count unique hashes${RESET}"
     echo ""
     
@@ -139,7 +143,7 @@ run_monitor() {
     else
         LOG_CMD=(
             journalctl
-            -u "$CONTAINER_NAME"
+            -u "$SYSTEMD_NAME"
             -f
             --output=cat
             --since "$(date -u '+%Y-%m-%d %H:%M:%S')"
