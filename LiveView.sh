@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # ─── USER VARIABLES ────────────────────────────────
-CONTAINER_NAME="${CONTAINER_NAME:-midnight}"
+CONTAINER_NAME="${CONTAINER_NAME:-midnight-node}"
 PORT="${PORT:-9944}"
-USE_DOCKER="${USE_DOCKER:-true}"
+USE_DOCKER="${USE_DOCKER:-false}"
 
 # ─── PATHS ─────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
