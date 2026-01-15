@@ -1,10 +1,18 @@
 # Midnight Node Monitoring
-## Inspired by CNTool's gLiveView
-### Thanks to @RcadaPool SPO for his key‑checker script.
 
-LiveView version 0.2.1
-Tested on Midnight Validator Node - Testnet - Version: 0.12.0-cab67f3b
+---
 
+## Credits
+
+- **CNTool's gLiveView** - Dashboard inspiration and design
+- **@RcadaPool SPO** - Key-checker script logic
+
+---
+
+## Version Information
+
+- **LiveView version:** 0.2.1
+- **Tested on:** Midnight Validator Node - Testnet - Version: 0.12.0-cab67f3b
 
 
 A comprehensive monitoring solution for Midnight blockchain nodes, featuring real-time dashboard monitoring and persistent block tracking.
