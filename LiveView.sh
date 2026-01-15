@@ -38,7 +38,7 @@ execute_command(){
   if [[ "$USE_DOCKER" == true ]]; then
     docker exec "$CONTAINER_NAME" "$@"
   else
-    eval "$@"
+    "$@"
   fi
 }
 
