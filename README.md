@@ -1,5 +1,6 @@
 # Midnight Node Monitoring
 ## Inspired by CNTool's gLiveView
+### Thanks to @RcadaPool SPO for his key‑checker script.
 
 LiveView version 0.2.1
 Tested on Midnight Validator Node - Testnet - Version: 0.12.0-cab67f3b
